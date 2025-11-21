@@ -19,22 +19,38 @@ const clerkWebhooks = async (req, res) => {
         // Getting data from request body
         const { data, type } = req.body;
 
-        const userData = {
-            _id: data.id,
-            email: data.email_addresses[0].email_address,
-            username: data.first_name + " " + data.last_name,
-            image: data.image_url,
-            // password: "clerk_default_password", // Placeholder, consider a better approach
-        }
+        // const userData = {
+        //     _id: data.id,
+        //     email: data.email_addresses[0].email_address,
+        //     username: data.first_name + " " + data.last_name,
+        //     image: data.image_url,
+        //     // password: "clerk_default_password", // Placeholder, consider a better approach
+        // }
 
         // Switch cases for different events
         switch (type) {
             case "user.created":{
+                const userData = {
+                  _id: data.id,
+                  email: data.email_addresses[0].email_address,
+                  username: data.first_name + " " + data.last_name,
+                  image: data.image_url,
+                  // password: "clerk_default_password", // Placeholder, consider a better approach
+                };
+
                 await User.create(userData);
                 break;
             }
 
             case "user.updated":{
+                const userData = {
+                  _id: data.id,
+                  email: data.email_addresses[0].email_address,
+                  username: data.first_name + " " + data.last_name,
+                  image: data.image_url,
+                  // password: "clerk_default_password", // Placeholder, consider a better approach
+                };
+                
                 await User.findByIdAndUpdate(data.id, userData);
                 break;
             }
