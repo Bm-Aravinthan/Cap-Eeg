@@ -6,15 +6,18 @@ const ResearchPostSchema = new mongoose.Schema(
     slug: { type: String, required: true, unique: true },
     content: { type: String, required: true }, // markdown
     coverImageUrl: { type: String, default: null },
+    images: [{ type: String }],
+    documentUrl: { type: String },
     tags: [{ type: String }],
     author: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "User",
       required: true,
     },
     isDraft: { type: Boolean, default: false },
     views: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
+    likedBy: [{ type: String, ref: "User" }],
     generatedByAI: { type: Boolean, default: false },
   },
   { timestamps: true }

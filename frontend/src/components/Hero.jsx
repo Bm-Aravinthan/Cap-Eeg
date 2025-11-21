@@ -1,9 +1,16 @@
+import { useContext } from "react";
 import { assets } from "../assets/assets"
+import { UserContext } from "../context/userContext";
+import JoinModal from "./JoinModal";
+import { useState } from "react";
 
 const Hero = () => {
+    // const { clerkUserRole } = useContext(UserContext);
+
+    // const [showJoinModal, setShowJoinModal] = useState(false);
   return (
     // <div className="flex flex-col items-start justify-center px-6 md:px-16 lg-px-24 xl:px-32 text-white bg-[url('/src/assets/gradientBackground.png')] bg-no-repeat bg-cover bg-center h-screen">
-    <div className="relative inline-flex flex-col w-full items-center mt-14 sm:mt-16 px-6 md:px-16 lg-px-24 xl:px-32 text-black bg-[url('/src/assets/gradientBackground.png')] bg-no-repeat bg-cover min-h-screen my-12 sm:my-16">
+    <div className="relative inline-flex flex-col w-full items-center mt-14 sm:mt-16 px-6 md:px-16 lg-px-24 xl:px-32 text-black bg-[url('/src/assets/gradientBackground.png')] bg-no-repeat bg-cover min-h-screen my-1 sm:my-0">
         <img src={assets.logoFull} alt="full logo" className="max-h-44 sm:max-h-56 md:max-h-60 mt-8" />
         <h1 className="font-playfair text-base md:text-2xl md:leading-[56px] font-bold md:font-extrabold mt-2">Investigator: Professor Mridula Sharma, PhD</h1>
         {/* <div className="items-start text-start mt-2">
@@ -33,9 +40,11 @@ const Hero = () => {
             </div>
         </div>
 
-        <button className="mt-4 md:mt-8 bg-white px-10 py-2.5 rounded-lg border border-gray-300 hover:scale-102 active:scale-95 transition cursor-pointer text-sm">Participate in our research</button>
+        {/* {!["admin", "superadmin"].includes(clerkUserRole) && <button onClick={() => setShowJoinModal(true)} className="mt-4 md:mt-8 bg-white px-10 py-2.5 rounded-lg border border-gray-300 hover:scale-102 active:scale-95 transition cursor-pointer text-sm">Participate in our research</button>} */}
 
         <img src={assets.eegHome} alt="Home Image" className="mt-4 md:mt-8 max-h-44 sm:max-h-56 md:max-h-90" />
+
+        {/* <JoinModal isOpen={showJoinModal} onClose={() => setShowJoinModal(false)} /> */}
     </div>
   )
 }

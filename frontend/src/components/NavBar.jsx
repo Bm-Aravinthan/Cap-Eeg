@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LuSearch } from "react-icons/lu";
 import { assets } from '../assets/assets'; 
 import { useClerk, useUser, UserButton } from '@clerk/clerk-react';
 import SearchBarPopup from './SearchBarPopup';
+import { UserContext } from '../context/userContext';
+import JoinModal from './JoinModal';
+import axios from "axios";
+import { useAuth } from "@clerk/clerk-react";
+import { API_PATHS } from "../utils/apiPaths";
 
 const Dashboard = ()=>(
     <svg className="w-4 h-4 text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" >
@@ -24,14 +29,24 @@ const NavBar = () => {
         { name: 'Contact', path: '/contact' },
     ];
 
+    const { clerkUserRole } = useContext(UserContext);
+    const { getToken } = useAuth();
+
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [openSearchBar, setOpenSearchBar] = useState(false);
+    const [showJoinModal, setShowJoinModal] = useState(false);
 
     const { openSignIn } = useClerk();
     const { user } = useUser();
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [joinStatus, setJoinStatus] = useState({
+        loading: true,
+        hasRequested: false,
+        status: null,
+    });
 
     const searchFunction = () => {
         setOpenSearchBar(true);
@@ -46,7 +61,32 @@ const NavBar = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Fetch join request status for the logged-in student
+    const fetchJoinRequestStatus = async () => {
+        try {
+        const token = await getToken();
+        const res = await axios.get(API_PATHS.AUTH.JOIN_REQUESTS_STATUS, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setJoinStatus({
+            loading: false,
+            hasRequested: res.data?.hasRequested,
+            status: res.data?.status,
+        });
+        
+        } catch (err) {
+        console.log("Status fetch error:", err);
+        setJoinStatus({ loading: false, hasRequested: false, status: null });
+        }
+    };
+
+    useEffect(() => {
+        if (user) fetchJoinRequestStatus();
+    }, [user]);
+
     return (
+        <>
             <nav className={`fixed top-0 left-0 bg-indigo-500 w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${isScrolled ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-2 md:py-3" : "py-3 md:py-4"}`}>
 
                 {/* Logo */}
@@ -62,7 +102,34 @@ const NavBar = () => {
                             <div className={`${isScrolled ? "bg-gray-700" : "bg-white"} h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
                         </a>
                     ))}
-                    {user && <button onClick={() => navigate('/dashboard')} className={`border px-3 py-1 text-[12px] font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white'} transition-all`}>
+
+                    {/* {joinStatus.loading && (
+                    <button className={`border px-3 py-1 text-[12px] font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white'} transition-all`} disabled>
+                        Checking...
+                    </button>
+                    )} */}
+
+                    {clerkUserRole === "member" && !joinStatus.hasRequested && (
+                    <button
+                        onClick={() => setShowJoinModal(true)}
+                        className={`border px-3 py-1 text-[12px] font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white'} transition-all`}
+                    >
+                        Join
+                    </button>
+                    )}
+
+                    {clerkUserRole === "member" && joinStatus.hasRequested && joinStatus.status === "pending" && (
+                        <button
+                        // className="px-5 py-2 bg-yellow-500 text-white rounded-lg "
+                        className={`border px-3 py-1 text-[12px] font-light rounded-full cursor-default ${isScrolled ? 'text-black' : 'text-white'} transition-all`}
+                        disabled
+                        >
+                        Requested
+                        </button>
+                    )}
+
+
+                    {["admin", "superadmin"].includes(clerkUserRole) && <button onClick={() => navigate('/admin/dashboard')} className={`border px-3 py-1 text-[12px] font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white'} transition-all`}>
                         Dashboard
                     </button>}
                 </div>
@@ -74,14 +141,17 @@ const NavBar = () => {
                         Login
                     </button> */}
 
-                    <button className="text-white hover:text-black cursor-pointer" onClick={() => setOpenSearchBar(true)}>
+                    <button className={`cursor-pointer ${isScrolled ? "text-gray-700" : "text-white"}`} onClick={() => setOpenSearchBar(true)}>
                         <LuSearch className="text-[22px]" />
                     </button>
 
                     {user ? 
                     (<UserButton>
                         <UserButton.MenuItems>
-                            <UserButton.Action label='Dashboard' labelIcon={<Dashboard />} onClick={() => navigate('/dashboard')}/>
+                            {
+                                ["admin", "superadmin"].includes(clerkUserRole) && <UserButton.Action label='Dashboard' labelIcon={<Dashboard />} onClick={() => navigate('/admin/dashboard')}/>
+                            }
+                            {/* <UserButton.Action label='Dashboard' labelIcon={<Dashboard />} onClick={() => navigate('/admin/dashboard')}/> */}
                         </UserButton.MenuItems>
                     </UserButton>) 
                     : 
@@ -94,9 +164,32 @@ const NavBar = () => {
                 {/* Mobile Menu Button */}
 
                 <div className="flex items-center gap-3 md:hidden">
+                    {clerkUserRole === "member" && !joinStatus.hasRequested && (
+                    <button
+                        onClick={() => setShowJoinModal(true)}
+                        className={`border px-3 py-1 text-[12px] font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white'} transition-all`}
+                    >
+                        Join
+                    </button>
+                    )}
+
+                    {clerkUserRole === "member" && joinStatus.hasRequested && joinStatus.status === "pending" && (
+                        <button
+                        // className="px-5 py-2 bg-yellow-500 text-white rounded-lg "
+                        className={`border px-3 py-1 text-[12px] font-light rounded-full cursor-default ${isScrolled ? 'text-black' : 'text-white'} transition-all`}
+                        disabled
+                        >
+                        Requested
+                        </button>
+                    )}
+
+
                     { user && <UserButton>
                         <UserButton.MenuItems>
-                            <UserButton.Action label='Dashboard' labelIcon={<Dashboard />} onClick={() => navigate('/dashboard')}/>
+                            {
+                                ["admin", "superadmin"].includes(clerkUserRole) && <UserButton.Action label='Dashboard' labelIcon={<Dashboard />} onClick={() => navigate('/admin/dashboard')}/>
+                            }
+                            {/* <UserButton.Action label='Dashboard' labelIcon={<Dashboard />} onClick={() => navigate('/admin/dashboard')}/> */}
                         </UserButton.MenuItems>
                     </UserButton>}
 
@@ -124,7 +217,7 @@ const NavBar = () => {
                         </a>
                     ))}
 
-                    {user && <button onClick={() => navigate('/dashboard')} className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
+                    {["admin", "superadmin"].includes(clerkUserRole) && <button onClick={() => navigate('/admin/dashboard')} className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
                         Dashboard
                     </button>}
 
@@ -140,6 +233,17 @@ const NavBar = () => {
                 </div>
                 <SearchBarPopup isOpen={openSearchBar} setIsOpen={setOpenSearchBar} />
             </nav>
+            
+            {/* {showJoinModal && (
+                    <JoinModal
+                    onClose={() => setShowJoinModal(false)}
+                    onSuccess={() => setShowJoinModal(false)}
+                    />
+            )} */}
+
+            <JoinModal isOpen={showJoinModal} onClose={() => setShowJoinModal(false)} />
+
+        </>
     );
 }
 export default NavBar
