@@ -13,7 +13,7 @@ import Comments from "./pages/Admin/Comments";
 import AdminLogin from "./pages/Admin/AdminLogin";
 import ResearchLandingPage from "./pages/Research/ResearchLandingPage";
 import UserProvider from "./context/userContext";
-import ResearchPostEditorQuill from "./pages/Admin/ResearchPostEditorQuill";
+// import ResearchPostEditorQuill from "./pages/Admin/ResearchPostEditorQuill";
 import Students from "./pages/Admin/Students";
 
 const App = () => {
