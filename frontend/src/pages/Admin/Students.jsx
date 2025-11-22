@@ -206,8 +206,10 @@ const Students = () => {
     });
 
     toast.success("User promoted to Admin");
-    fetchStudents();  // refresh list
+    // fetchStudents();  // refresh list
+    fetchJoinRequests(1, "all")
   } catch (err) {
+    console.error(err);
     toast.error("Failed to promote user");
   }
 };
@@ -220,8 +222,10 @@ const demoteUser = async (userId) => {
     });
 
     toast.success("User demoted to Member");
-    fetchStudents();  // refresh list
+    // fetchStudents();  // refresh list
+    fetchJoinRequests(1, "all")
   } catch (err) {
+    console.error(err);
     toast.error("Failed to demote user");
   }
 };
