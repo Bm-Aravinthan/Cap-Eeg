@@ -21,7 +21,7 @@ console.log("Generate Research Post Request Body:", req.body);
     const prompt = `Write a markdown-formatted research post titled "${title}". Use a ${tone} tone. Include an introduction, subheadings, code examples if relevant, and a conclusion.`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-lite",
+      model: "gemini-2.5-flash",
       contents: prompt,
     });
 
@@ -50,7 +50,7 @@ const generateResearchPostIdeas = async (req, res) => {
     const prompt = researchPostIdeasPrompt(topics);
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-lite",
+      model: "gemini-2.5-flash",
       contents: prompt,
     });
 
@@ -88,7 +88,7 @@ const generateCommentReply = async (req, res) => {
     const prompt = generateReplyPrompt({ author, content });
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-lite",
+      model: "gemini-2.5-flash",
       contents: prompt,
     });
 
@@ -116,10 +116,10 @@ const generatePostSummary = async (req, res) => {
     const prompt = researchSummaryPrompt(content);
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-lite",
+      model: "gemini-2.5-flash",
       contents: prompt,
     });
-
+console.log(response);
     let rawText = response.text;
 
     // Clean it: Remove ```json and ``` from beginning and end
