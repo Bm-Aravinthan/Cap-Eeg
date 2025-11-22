@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import DashboardLayout from "../../components/layouts/DashboardLayout";
+// import DashboardLayout from "../../components/Layout/DashboardLayout";
 
 import { assets } from "../../assets/assets";
 import Login from "../../components/Auth/Login";

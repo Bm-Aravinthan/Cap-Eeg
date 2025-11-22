@@ -3,7 +3,7 @@
 // import { LuGalleryVerticalEnd, LuLoaderCircle, LuPlus } from "react-icons/lu";
 // import toast from "react-hot-toast";
 // import moment from "moment";
-// import DashboardLayout from "../../components/layouts/DashboardLayout";
+// import DashboardLayout from "../../components/Layout/DashboardLayout";
 
 // // import axiosInstance from "../../utils/axiosInstance";
 // import { API_PATHS } from "../../utils/apiPaths";
@@ -246,7 +246,7 @@ import {
 } from "react-icons/lu";
 import toast from "react-hot-toast";
 import moment from "moment";
-import DashboardLayout from "../../components/layouts/DashboardLayout";
+import DashboardLayout from "../../components/Layout/DashboardLayout";
 import Modal from "../../components/Modal";
 import Tabs from "../../components/Tabs";
 import DeleteAlertContent from "../../components/DeleteAlertContent";

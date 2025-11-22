@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import TrendingPostsSection from "./components/TrendingPostsSection";
 import SkeletonLoader from "../../components/Loader/SkeletonLoader";
 import { useNavigate, useParams } from 'react-router-dom';
-import ResearchLayout from '../../components/layouts/ResearchLayout/ResearchLayout.jsx';
+import ResearchLayout from '../../components/Layout/ResearchLayout/ResearchLayout.jsx';
 import MarkdownContent from './components/MarkdownContent';
 import SharePost from './components/SharePost';
 import { sanitizeMarkdown } from '../../utils/helper';

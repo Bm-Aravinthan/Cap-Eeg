@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { LuGalleryVerticalEnd, LuLoaderCircle } from "react-icons/lu";
-import ResearchLayout from "../../components/layouts/ResearchLayout/ResearchLayout.jsx"
+import ResearchLayout from "../../components/Layout/ResearchLayout/ResearchLayout.jsx"
 // import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import FeaturedResearchPost from "./components/FeaturedResearchPost";

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import DashboardLayout from "../../components/layouts/DashboardLayout";
+import DashboardLayout from "../../components/Layout/DashboardLayout";
 import { UserContext } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { API_PATHS } from "../../utils/apiPaths";

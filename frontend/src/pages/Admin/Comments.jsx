@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import toast from 'react-hot-toast';
-import DashboardLayout from '../../components/layouts/DashboardLayout.jsx'
+import DashboardLayout from '../../components/Layout/DashboardLayout.jsx'
 import CommentInfoCard from '../../components/Cards/CommentInfoCard';
 // import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';

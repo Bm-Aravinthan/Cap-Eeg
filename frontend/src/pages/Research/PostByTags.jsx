@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ResearchLayout from '../../components/layouts/ResearchLayout/ResearchLayout'
+import ResearchLayout from '../../components/Layout/ResearchLayout/ResearchLayout'
 import { useNavigate, useParams } from "react-router-dom";
 // import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";

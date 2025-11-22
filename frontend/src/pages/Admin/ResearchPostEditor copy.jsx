@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LuLoaderCircle, LuSave, LuSend, LuSparkles, LuTrash2 } from "react-icons/lu";
 import MDEditor, { commands } from "@uiw/react-md-editor";
-import DashboardLayout from "../../components/layouts/DashboardLayout";
+import DashboardLayout from "../../components/Layout/DashboardLayout";
 // import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import CoverImageSelector from "../../components/Inputs/CoverImageSelector";

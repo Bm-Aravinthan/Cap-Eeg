@@ -9,7 +9,7 @@ import { LuLoaderCircle, LuSave, LuSend, LuSparkles, LuTrash2 } from "react-icon
 import Quill from "quill";
 import "quill/dist/quill.snow.css"; // Import Quill styles
 
-import DashboardLayout from "../../components/layouts/DashboardLayout";
+import DashboardLayout from "../../components/Layout/DashboardLayout";
 // import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import CoverImageSelector from "../../components/Inputs/CoverImageSelector";
