@@ -53,6 +53,12 @@ const NavBar = () => {
         setIsMenuOpen(false);
     }
 
+    const dashboardFunction = () => {
+        // () => navigate('/admin/dashboard')
+        navigate('/admin/dashboard')
+        setIsMenuOpen(false);
+    }
+
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10);
@@ -217,7 +223,7 @@ const NavBar = () => {
                         </a>
                     ))}
 
-                    {["admin", "superadmin"].includes(clerkUserRole) && <button onClick={() => navigate('/admin/dashboard')} className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
+                    {["admin", "superadmin"].includes(clerkUserRole) && <button onClick={() => dashboardFunction()} className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
                         Dashboard
                     </button>}
 
