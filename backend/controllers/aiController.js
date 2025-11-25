@@ -13,7 +13,6 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const generateResearchPost = async (req, res) => {
   try {
     const { title, tone } = req.body;
-console.log("Generate Research Post Request Body:", req.body);
     if (!title || !tone) {
       return res.status(400).json({ message: "Missing required fields" });
     }
@@ -48,7 +47,7 @@ const generateResearchPostIdeas = async (req, res) => {
     }
 
     const prompt = researchPostIdeasPrompt(topics);
-
+console.log(prompt);
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: prompt,
